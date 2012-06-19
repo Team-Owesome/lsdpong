@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<script type="text/javascript" src="https://raw.github.com/faebeee/SneakyConsole/master/SneakyConsole.js"></script>
+		<script type="text/javascript" src="BoredEngine.js"></script>
+<script>
+		
+		
+		function onLoad()
+		{
+				SneakyConsole.setup({
+				width:100,
+				height:30,
+				input:true,
+				lineBuffer:10000,
+				viewable:true,
+				background:"#ccc",
+				color:"black",
+				border:false,
+				actionKey:120,
+				fontSize:16
+			});
+
+			SneakyConsole.init();
+			
+			var engine = new BoredEngine(new Config("stage", 1000 / 30), 50);	
+			
+		
+		}
+		
+		
+		
+		</script>
+		<style>
+			canvas
+			{
+				background:#222;
+				border:solid 5px #ccc;
+			}
+			body
+			{
+				background:#000;
+			}
+			h1
+			{
+				color:lime;
+			}			
+		</style>
+		<title>Borengine Alphabetaomega v0.000001</title>
+	</head>
+	<body onload="onLoad()">
+		<center>
+			<h1>Borengine Alphabetaomega v0.000001</h1>
+			<canvas id="stage" width="640" height="380"></canvas> 
+		</center>
+	</body>
+</html>
