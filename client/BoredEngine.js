@@ -7,7 +7,7 @@
 // --> new BoredEngine(new Config("stage", 1000 / 30));
 /* 
     var TEAM_OWESOME=
-	{
+    {
 		dev:
 		{
 			{name:'faebee'}, 
@@ -240,7 +240,7 @@ var ERRORS=new ERROR_COLLECTION();
 //var io=null;
 
 //Networking
-function NetworkEngine(config)
+function NetworkEngine(engine)
 {
 	this.connection=null;
 	this.serverUrl='http://lsdpongserver.fabs.c9.io/';
@@ -249,6 +249,7 @@ function NetworkEngine(config)
 	this.TEST_CLIENT="TEST_CLIENT";
 	this.TEST_SERVER="TEST_SERVER";
 	this.isConnected=false;
+    this.engine=engine;
 	SneakyConsole.log("NetworkEngine created {url:'"+this.serverUrl+"', testConnectionRequest:"+this.testConnectionRequest+"}");
 	
 	//connect to server
@@ -325,23 +326,19 @@ function NetworkEngine(config)
 		this.connection.on('update', 
 			function(data)
 	        {
-                var engine = this.engine;
-    
-				var entities = engine.entityManager.getEntitiesWithComponents([NETWORK_COMPONENT_NAME]);
-                SneakyConsole.log(entities.length);
-            	for (var entityId in entities)
-            	{
-                    var networkComponent = this.engine.entityManager.getComponentOfEntity(entityId, NETWORK_COMPONENT_NAME);
-                    if(networkComponent.tag==data.component.tag)
+                var entities = engine.entityManager.getEntitiesWithComponents([NETWORK_COMPONENT_NAME]);
+                
+                for(var entityId in entities)
+                {
+	        	    var networkComponent = engine.entityManager.getComponentOfEntity(entityId, NETWORK_COMPONENT_NAME);
+                    if(networkComponent.tag==data.tag)
                     {
-                        networkComponent=data.component;
-                        SneakyConsole.log("Entity updated");
+            	        var spatialComponent = engine.entityManager.getComponentOfEntity(entityId, SPATIAL_COMPONENT_NAME);
+                        spatialComponent.x=data.component.x;
+                        spatialComponent.y=data.component.y;
                     }
-                    else
-                    {
-                        
-                    }
-            	}
+                }
+               
 			}
 		);
 	}
@@ -375,7 +372,7 @@ function BoredEngine(config)
 	var _self = this;
 	var NETWORKING=false;
 	var _canvas;
-	this.network=new NetworkEngine();
+	this.network=new NetworkEngine(this);
 	
 	// Public
 	this.config = _config;
@@ -1046,7 +1043,9 @@ function()
 // onUpdate
 function()
 {
+    
     var engine = this.engine;
+    
 	// Und denn
 	var entityId = this.networkEntities[0];
 	
@@ -1057,8 +1056,11 @@ function()
   
     if(networkComponent&&spatialComponent)
     {
-        engine.network.connection.emit('update', {component:spatialComponent});
+      
+        engine.network.connection.emit('update', {tag:networkComponent.tag, component:spatialComponent});
+        
     }
+
 });
 
 // --------------------

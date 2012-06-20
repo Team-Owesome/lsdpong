@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="http://lsdpongserver.fabs.c9.io/socket.io/socket.io.js"></script>
 		<script type="text/javascript" src="https://raw.github.com/faebeee/SneakyConsole/master/SneakyConsole.js"></script>
 		<script type="text/javascript" src="BoredEngine.js"></script>
 <script>
@@ -11,14 +12,14 @@
 				SneakyConsole.setup({
 				width:100,
 				height:30,
-				input:true,
+				input:false,
 				lineBuffer:10000,
 				viewable:true,
 				background:"#ccc",
 				color:"black",
 				border:false,
 				actionKey:120,
-				fontSize:16
+				fontSize:14
 			});
 
 			SneakyConsole.init();
@@ -34,7 +35,7 @@
 		<style>
 			canvas
 			{
-				background:#222;
+			
 				border:solid 5px #ccc;
 			}
 			body
