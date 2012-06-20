@@ -1,0 +1,21 @@
+<script src="http://lsdpongserver.fabs.c9.io/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://lsdpongserver.fabs.c9.io');
+  var TEST_CLIENT="TEST_CLIENT";
+  var TEST_SERVER="TEST_SERVER";
+
+  function test_connection()
+  {
+    socket.emit(TEST_CLIENT, { text: TEST_CLIENT});
+      console.log("SENDING DATA TO SERVER");
+  }
+  
+  socket.on(TEST_SERVER, function(data)
+  {
+      console.log("INCOMMING DATA FROM SERVER");
+  });
+
+  setInterval(test_connection, 1000);
+</script>
+<div id="data">
+</div>
